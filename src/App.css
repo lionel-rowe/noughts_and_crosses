@@ -77,11 +77,34 @@ h1 {
   top: 100px;
   left: 50%;
   transform: translateX(-50%);
-  width: 300px;
+  width: 450px;
   margin: auto;
   background: black;
   outline: 10px solid rgba(0,0,0,0.3);
 }
+
+.PlayAgainScreen .board {
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 20px auto;
+}
+
+.PlayAgainScreen .Square {
+  font-size: 21pt;
+  width: 35px;
+  height: 35px;
+}
+
+.PlayAgainScreen .top, .bottom, .left, .right {
+  border-width: 2px;
+}
+
+.PlayAgainScreen .winning {
+  background: rgba(255,0,0,0.3);
+}
+
 
 .PlayAgainScreen h2, p {
   text-align: center;
@@ -89,7 +112,7 @@ h1 {
 
 .PlayAgainScreen input[type="button"] {
   font-weight: bold;
-  margin: 5px 20px;
+  margin: 5px 0;
   padding: 10px 25px;
   background: black;
   color: red;
@@ -97,6 +120,9 @@ h1 {
   font-family: Corbel, sans-serif;
   cursor: pointer;
   transition: background 0.5s, color 0.5s;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .PlayAgainScreen input[type="button"]:hover {
@@ -109,10 +135,33 @@ h1 {
   padding: 10px;
 }
 
-.PlayAgainScreen .optionButtons {
+label {
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+input[type="radio"] + span {
   display: inline-block;
-  margin: 0 auto;
   position: relative;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  margin: 0 5px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+input[type="radio"]:checked + span::after {
+  content: "";
+  background-color: white;
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  left: 4px;
 }
