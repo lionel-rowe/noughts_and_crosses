@@ -1,0 +1,15 @@
+{
+  "short_name": "0s and Xs",
+  "name": "Noughts and Crosses",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#ff3311",
+  "background_color": "#ffffff"
+}
