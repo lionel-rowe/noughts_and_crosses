@@ -180,7 +180,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>Tic Tac Toe</h1>
+        <h1>0s and Xs</h1>
         <PlayArea />
       </div>
     );
