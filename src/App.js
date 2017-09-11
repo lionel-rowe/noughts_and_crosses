@@ -64,6 +64,7 @@ class PlayArea extends React.Component {
     super();
     this.state = this.initState();
     this.state.players = 1;
+    this.state.mode = 'random';
   }
 
   initState() {
@@ -75,12 +76,15 @@ class PlayArea extends React.Component {
     return initialState;
   }
 
+    // if (this.state.players === 1 && this.state.itsXsTurn) {
+    //   setTimeout(this.aiPlay(this.state.mode), 1000);
+    // }
+
   handleClick(seq) {
+
     if (this.state.squares[seq] || this.state.winStatus) {
       return;
     }
-
-    console.log(this);
     
     const squares = this.state.squares.slice();
     squares[seq] = (this.state.itsXsTurn ? 'X' : 'O');
@@ -90,9 +94,28 @@ class PlayArea extends React.Component {
         squares: squares,
         itsXsTurn: !this.state.itsXsTurn,
         winStatus: checkWinner(squares),
-      }
+      },
+      this.checkAiTurn
     );
 
+  }
+
+  checkAiTurn() {
+    if (this.state.players === 1 && !this.state.itsXsTurn && !this.state.winStatus) {
+      setTimeout(() => this.aiPlay(), 1000);
+    } 
+  }
+
+  aiPlay() {
+    let seq;
+    if (this.state.mode === 'random') {
+      do {
+        seq = Math.floor(Math.random() * 9);
+      } while (this.state.squares[seq]);
+    } else {
+
+    }
+    this.handleClick(seq);
   }
 
   renderPlayAgainScreen() {
@@ -106,12 +129,14 @@ class PlayArea extends React.Component {
 
   render() {
     return (
-      <div className="PlayArea">
-        <Board itsXsTurn={this.state.itsXsTurn} onClick={(seq) => this.handleClick(seq)} squares={this.state.squares} />
-        <div className="statusLine">
-          {this.state.winStatus ? '' : `Current turn: ${this.state.itsXsTurn ? 'X' : 'O'}`}
+      <div>
+        <div className={'playArea ' + (this.state.winStatus ? 'hidden' : null)}>
+          <Board itsXsTurn={this.state.itsXsTurn} onClick={(seq) => this.handleClick(seq)} squares={this.state.squares} />
+          <div className="statusLine">
+            {this.state.winStatus ? '' : `Current turn: ${this.state.itsXsTurn ? 'X' : 'O'}`}
+          </div>
+          <Controls players={this.state.players} changeHandler={(value) => this.setState({players: value})} />
         </div>
-        <Controls players={this.state.players} clickHandler={(value) => this.setState({players: value})} />
         {this.renderPlayAgainScreen()}
       </div>
     );
@@ -126,9 +151,9 @@ class PlayArea extends React.Component {
 function Controls(props) {
   return (
     <form>
-      <label><input type="radio" name="players" value="one" checked={props.players === 1} onClick={() => props.clickHandler(1)} /><span />One player</label>
+      <label><input type="radio" name="players" value="one" checked={props.players === 1} onChange={() => props.changeHandler(1)} /><span />One player</label>
       <br />
-      <label><input type="radio" name="players" value="two" checked={props.players === 2} onClick={() => props.clickHandler(2)} /><span />Two players</label>
+      <label><input type="radio" name="players" value="two" checked={props.players === 2} onChange={() => props.changeHandler(2)} /><span />Two players</label>
     </form>
   );
 }
@@ -147,10 +172,6 @@ class PlayAgainScreen extends React.Component {
         </div>
       </div>
     );
-  }
-
-  playAgain() {
-    PlayArea.reset();
   }
 
 }
