@@ -199,17 +199,12 @@ function checkWinner(sqArr) {
   , [2,4,6]
   ]
 
-  //ok so this is ugly, I admit...
-  for (let i=0;i<wins.length;i++) {
-    if (sqArr[wins[i][0]] && sqArr[wins[i][0]] === sqArr[wins[i][1]] && sqArr[wins[i][0]] === sqArr[wins[i][2]]) {
-      return sqArr[wins[i][0]];
-    }
-  }
+  const [firstCellOfARow] = wins.find(([a, b, c]) =>
+    sqArr[a] && sqArr[a] === sqArr[b] && sqArr[a] === sqArr[c])
 
-  if (sqArr[0] && sqArr[1] && sqArr[2] && sqArr[3] && sqArr[4] && sqArr[5] && sqArr[6] && sqArr[7] && sqArr[8]) {
-      return 'draw';
-  }
-
+  return firstCellOfARow ? sqArr[firstCellOfARow] :
+    sqArr.every(x => new Boolean(x)) ? 'draw' :
+    undefined
 }
 
 export default App;
